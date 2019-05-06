@@ -68,12 +68,16 @@ Exit from the nodes but master.
 
 ##### Note:
 	Every master host, node host, and subnet must have the tags defined as below format 
-	     e.g. kubernetes.io/cluster/<clusterid>,Value=(owned|shared)
+	    
+	    e.g. kubernetes.io/cluster/<clusterid>,Value=(owned|shared)
+	
 	One security group, preferably the one linked to the nodes, must have the 
-	     kubernetes.io/cluster/<clusterid>,Value=(owned|shared) tag
+	    
+	    kubernetes.io/cluster/<clusterid>,Value=(owned|shared) tag
 	     
 	     
-###Installation of Openshift AWS on Master node
+### Installation of Openshift AWS on Master node
+
 ```
 chmod +x install-openshift.sh
 ./install-openshift.sh
