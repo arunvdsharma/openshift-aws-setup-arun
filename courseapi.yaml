@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: courseapi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: courseapi
+  template:
+    metadata:
+      labels:
+        app: courseapi
+    spec:
+      containers:
+      - name: courseapi-c
+        image: arunsharma/courseapi
+        ports:
+        - containerPort: 8080
+
+#Exposing service using NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: courseapi-svc
+
+spec:
+  selector:
+  #selector has to be same as metadata.labels.app in Pod definition.
+    app: courseapi
+  ports:
+  #port 80 will be used by other services to access courseapi service within the kubernetes cluster at port 80
+  - port: 80
+  #targetPort 8080 where the actual service is running. It will be same as spec.containers.ports.contaienrPort in the pods definitions.
+    targetPort: 8080
+    protocol: TCP
+  #The NodePort type allows to create a port Node (machine) where courseapi service can be via kube-proxy
+  type: LoadBalancer
