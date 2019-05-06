@@ -3,8 +3,7 @@ This repository explains the steps of installing Openshift 3.11 with AWS Cloud c
 
 - Use inventory.ini file to start the installation.
 
-Common steps taken on all the nodes:
-=======================================
+### Common steps taken on all the nodes:
 sudo vi /etc/ssh/sshd_config
     PermitRootLogin yes    	#Uncomment this line in /etc/ssh/sshd_config and save it.
 sudo systemctl restart sshd
@@ -23,9 +22,9 @@ chmod +x install-tools.sh
 
 Exit from the nodes but master.
 
-============================================
-Installation of Openshift AWS on Master node
-============================================
+
+###Installation of Openshift AWS on Master node
+
 chmod +x install-openshift.sh
 
 #### Ensure you have the right inventory.ini file with AWS configurations in it. Check if that file has below properties
@@ -49,11 +48,13 @@ chmod +x install-openshift.sh
 	openshift_hosted_registry_enforcequota=true
 	openshift_hosted_registry_replicas=3
 
-Note:
+##### Note:
 	Every master host, node host, and subnet must have the tags defined as below format 
 	     e.g. kubernetes.io/cluster/<clusterid>,Value=(owned|shared)
 	One security group, preferably the one linked to the nodes, must have the 
 	     kubernetes.io/cluster/<clusterid>,Value=(owned|shared) tag
+	     
+	     
 
 
 ./install-openshift.sh
