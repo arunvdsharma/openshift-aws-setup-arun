@@ -1,15 +1,37 @@
 # Openshift 3.11 installation on AWS Cloud
 This repository explains the steps of installing Openshift 3.11 with AWS Cloud configurations.
 
-Use inventory.ini file to start the installation.
+
+## Ports required for Openshift Cluster
+
+Open ports on the network which will be used to setup Openshift Cluster.
+```
+22 			TCP
+53 or 8053		TCP/UDP
+80 or 443		TCP
+1936			TCP
+4001			TCP
+2379 and 2380		TCP
+4789			UDP
+8443			TCP
+10250			TCP
+```
+To get more details understanding on ports for Openshift, refer this link https://docs.openshift.com/container-platform/3.11/install/prerequisites.html
+
+
+# Install Openshift 3.11 on CentOS
+Provision 'n' number of nodes. In this example, I created 3 CentOS nodes on AWS. You need to make necessary changes to be able to login on CentOS with 'root' user account.
+
 
 ### Common steps taken on all the nodes:
+```
 sudo vi /etc/ssh/sshd_config
     PermitRootLogin yes    	#Uncomment this line in /etc/ssh/sshd_config and save it.
 sudo systemctl restart sshd
+```
 
 By default IAM doesn't allow to login with root user on EC2 instances but you can use the authroized_keys of centos user to access it.
-
+```
 sudo -s
 cp /home/centos/.ssh/authorized_keys /root/.ssh/authorized_keys
 
@@ -19,13 +41,9 @@ cd openshift-centos
 
 chmod +x install-tools.sh
 ./install-tools.sh
-
+```
 Exit from the nodes but master.
 
-
-###Installation of Openshift AWS on Master node
-
-chmod +x install-openshift.sh
 
 #### Ensure you have the right inventory.ini file with AWS configurations in it. Check if that file has below properties
 	openshift_cloudprovider_aws_access_key=AWS_ACCESS_KEY
@@ -55,6 +73,8 @@ chmod +x install-openshift.sh
 	     kubernetes.io/cluster/<clusterid>,Value=(owned|shared) tag
 	     
 	     
-
-
+###Installation of Openshift AWS on Master node
+```
+chmod +x install-openshift.sh
 ./install-openshift.sh
+```
